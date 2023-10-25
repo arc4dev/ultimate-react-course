@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
 import styles from './CityItem.module.css';
+import useCitiesContext from '../hooks/useCitiesContext';
 
 function CityItem({ city }) {
+  const { currentCity, deleteCity } = useCitiesContext();
+
   const { cityName, emoji, date, id, position } = city;
 
   const formatDate = (date) =>
@@ -12,15 +15,25 @@ function CityItem({ city }) {
       weekday: 'long',
     }).format(new Date(date));
 
+  const handleDelete = (e) => {
+    e.preventDefault();
+
+    deleteCity(id);
+  };
+
   return (
     <li>
       <Link
         to={`${id}?lat=${position.lat}&lng=${position.lng}`}
-        className={styles.cityItem}>
+        className={`${styles.cityItem} ${
+          currentCity.id === id ? styles['cityItem--active'] : ''
+        }`}>
         <span className={styles.emoji}>{emoji}</span>
         <h3 className={styles.name}>{cityName}</h3>
         <time className={styles.date}>{formatDate(date)}</time>
-        <button className={styles.deleteBtn}>&times;</button>
+        <button onClick={handleDelete} className={styles.deleteBtn}>
+          &times;
+        </button>
       </Link>
     </li>
   );

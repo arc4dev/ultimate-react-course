@@ -1,7 +1,10 @@
-import { useParams, useSearchParams } from 'react-router-dom';
-import styles from './City.module.css';
+import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
+
+import styles from './City.module.css';
 import Spinner from './Spinner';
+import useCitiesContext from '../hooks/useCitiesContext';
+import BackButton from './BackButton';
 
 const formatDate = (date) =>
   new Intl.DateTimeFormat('en', {
@@ -11,29 +14,15 @@ const formatDate = (date) =>
     weekday: 'long',
   }).format(new Date(date));
 
-function City({ isLoading }) {
+function City() {
+  const { isLoading, currentCity, getCity } = useCitiesContext();
   const { id } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams();
 
-  const lat = searchParams.get('lat');
-  const lng = searchParams.get('lng');
+  useEffect(() => {
+    getCity(id);
+  }, [id]);
 
-  // useEffect(() => {
-  //   fetch(`http://localhost:8000/cities/${id}`)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       console.log(data);
-  //     })
-  //     .catch(() => alert('Error while fetching data!'))
-  //     .finally(() => setIsLoading(false));
-  // }, []);
-  // TEMP DATA
-  const currentCity = {
-    cityName: 'Lisbon',
-    emoji: '🇵🇹',
-    date: '2027-10-31T15:59:59.138Z',
-    notes: 'My favorite city so far!',
-  };
+  if (currentCity.id !== +id || isLoading) return <Spinner />;
 
   const { cityName, emoji, date, notes } = currentCity;
 
@@ -68,7 +57,9 @@ function City({ isLoading }) {
         </a>
       </div>
 
-      <div>{/* <ButtonBack /> */}</div>
+      <div>
+        <BackButton />
+      </div>
     </div>
   );
 }

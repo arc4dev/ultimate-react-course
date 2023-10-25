@@ -37,28 +37,16 @@
       "id": 98443197
     },
     {
-      "cityName": "Barcelona",
-      "country": "Spain",
-      "emoji": "🇪🇸",
-      "date": "2027-07-15T08:22:53.976Z",
-      "notes": "",
+      "cityName": "Luxembourg",
+      "country": "Luxembourg",
+      "emoji": "🇱🇺",
+      "date": "2023-10-25T10:20:49.832Z",
+      "notes": "oh yeah",
       "position": {
-        "lat": 40.46635901755316,
-        "lng": -3.7133789062500004
+        "lat": 49.61071203478393,
+        "lng": 6.133419132202276
       },
-      "id": 12345678
-    },
-    {
-      "cityName": "Hamburg",
-      "country": "Germany",
-      "emoji": "🇩🇪",
-      "date": "2027-02-12T09:24:11.863Z",
-      "notes": "Amazing 😃",
-      "position": {
-        "lat": 52.53586782505711,
-        "lng": 13.376933665713324
-      },
-      "id": 87654321
+      "id": 59154958
     }
   ]
 }
