@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { createContext, useEffect, useReducer } from 'react';
+import { createContext, useEffect, useReducer, useCallback } from 'react';
 
 const CitiesContext = createContext();
 
@@ -69,7 +69,7 @@ function CitiesContextProvider({ children }) {
     fetchCities();
   }, []);
 
-  const getCity = async (id) => {
+  const getCity = useCallback(async (id) => {
     try {
       dispatch({ type: 'loading' });
       const res = await axios.get(`http://localhost:8000/cities/${id}`);
@@ -82,7 +82,7 @@ function CitiesContextProvider({ children }) {
       });
       console.log(err);
     }
-  };
+  }, []);
 
   const addCity = async (city) => {
     try {
