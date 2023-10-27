@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
 
 import { createRandomPost } from './helpers';
 
@@ -31,19 +31,20 @@ function PostContextProvider({ children }) {
     setPosts([]);
   }
 
-  return (
-    <PostContext.Provider
-      value={{
-        posts: searchedPosts,
-        setPosts,
-        onAddPost: handleAddPost,
-        onClearPosts: handleClearPosts,
-        searchQuery,
-        setSearchQuery,
-      }}>
-      {children}
-    </PostContext.Provider>
-  );
+  // we need separate contexts for posts and searchquery to optimize performance
+
+  const value = useMemo(() => {
+    return {
+      posts: searchedPosts,
+      setPosts,
+      onAddPost: handleAddPost,
+      onClearPosts: handleClearPosts,
+      searchQuery,
+      setSearchQuery,
+    };
+  }, [searchQuery, searchedPosts]);
+
+  return <PostContext.Provider value={value}>{children}</PostContext.Provider>;
 }
 
 // Custom hook to consume the posts context
